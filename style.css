@@ -331,34 +331,33 @@ body {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* Элегантная кнопка покупки */
+/* Контейнер для кнопки (центрирование) */
 .v-buy-wrapper {
-    text-align: center;
-    margin: 25px 0 10px;
+    display: flex;          /* Включаем флекс */
+    justify-content: center; /* Центрируем кнопку по горизонтали */
+    width: 100%;            /* Контейнер на всю ширину */
+    margin: 20px 0;         /* Отступы сверху и снизу */
 }
 
+/* Сама кнопка (компактная) */
 .v-buy-btn {
-    display: inline-flex;
+    display: inline-flex !important; /* Не дает растягиваться */
     align-items: center;
     gap: 8px;
-    background-color: #222; /* Можно заменить на #e91e63, если хочешь розовый */
+    background-color: #222;
     color: #fff !important;
-    padding: 10px 20px;
-    border-radius: 25px;
+    padding: 8px 16px;       /* Уменьшенные отступы */
+    border-radius: 20px;
     text-decoration: none;
-    font-size: 0.75rem;
+    font-size: 0.7rem;       /* Маленький шрифт */
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: all 0.2s ease;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    width: auto;             /* Ширина только по контенту */
+    white-space: nowrap;     /* Текст в одну строку */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .v-buy-btn:active {
-    transform: scale(0.96);
-    background-color: #000;
-}
-
-.v-buy-btn i {
-    font-size: 0.8rem;
+    transform: scale(0.95);
 }
