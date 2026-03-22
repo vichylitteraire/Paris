@@ -162,7 +162,7 @@ function toggleAudio() {
 /**
  * 6. MODAL & MULTILINGUAL CONGRATS
  */
-function openModal() {
+/* function openModal() {
     const grid = document.getElementById('stamps-grid');
     const status = document.getElementById('modal-status');
     const actor = actors[cafeSlug] || actors['default'];
@@ -215,7 +215,7 @@ function openModal() {
 
 function closeModal() {
     document.getElementById('stamps-modal').style.display = 'none';
-}
+} */
 
 function resetProgress() {
     const confirmText = state.lang === 'fr' ? "Recommencer la collection ?" : "Restart the collection?";
