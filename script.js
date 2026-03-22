@@ -126,3 +126,29 @@ function openModal() {
 function closeModal() {
     document.getElementById('stamps-modal').style.display = 'none';
 }
+
+function resetProgress() {
+    // Подтверждение, чтобы не сбросить случайно
+    const confirmReset = state.lang === 'fr' 
+        ? "Voulez-vous recommencer votre collection ?" 
+        : "Do you want to restart your collection?";
+
+    if (confirm(confirmReset)) {
+        // Загружаем базу
+        let db = JSON.parse(localStorage.getItem('user_stamps_db')) || {};
+        
+        // Обнуляем только для текущего кафе
+        if (db[cafeSlug]) {
+            db[cafeSlug].count = 0;
+            db[cafeSlug].lastCheckIn = ""; // Чтобы можно было сразу получить первую марку нового круга
+            localStorage.setItem('user_stamps_db', JSON.stringify(db));
+        }
+
+        // Закрываем модалку и обновляем её (или просто перезагружаем страницу)
+        closeModal();
+        alert(state.lang === 'fr' ? "C'est parti pour un nouveau tour !" : "Ready for a new round!");
+        
+        // Чтобы увидеть изменения сразу:
+        location.reload(); 
+    }
+}
