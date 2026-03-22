@@ -1,69 +1,4 @@
 /**
- * 1. CONFIGURATION & STATE
- */
-const urlParams = new URLSearchParams(window.location.search);
-const cafeSlug = urlParams.get('cafe') || 'default';
-
-const actors = {
-    'paul': { 
-        name: "Paul", 
-        stamp: "IMG_2970.jpg", 
-        logo: "IMG_2970.jpg",
-        desc: "Une pause gourmande avec nos viennoiseries artisanales." 
-    },
-    'default': { 
-        name: "L'Heure de Soi", 
-        stamp: "logopub.jpg", 
-        logo: "logopub.jpg",
-        desc: "Votre rendez-vous littéraire quotidien au cœur de Paris."
-    }
-};
-
-const state = {
-    lang: 'fr',
-    currentIndex: 0,
-    stories: [],
-    audio: new Audio(),
-    isPlaying: false
-};
-
-/**
- * 2. APP START
- */
-function setLanguage(lang) {
-    state.lang = lang;
-    
-    if (typeof STORIES_DATA_FR === 'undefined') {
-        alert("Error: Data files not found!");
-        return;
-    }
-
-    state.stories = (lang === 'fr') ? [...STORIES_DATA_FR.stories] : [...STORIES_DATA_EN.stories];
-    state.stories.sort(() => Math.random() - 0.5);
-
-    document.getElementById('language-screen').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
-
-    handleDailyStamp(); 
-    loadStory();
-}
-
-/**
- * 3. STAMP LOGIC
- */
-function handleDailyStamp() {
-    let db = JSON.parse(localStorage.getItem('user_stamps_db')) || {};
-    if (!db[cafeSlug]) db[cafeSlug] = { count: 0, lastCheckIn: "" };
-
-    const today = new Date().toDateString();
-    if (db[cafeSlug].lastCheckIn !== today && db[cafeSlug].count < 10) {
-        db[cafeSlug].count += 1;
-        db[cafeSlug].lastCheckIn = today;
-        localStorage.setItem('user_stamps_db', JSON.stringify(db));
-    }
-}
-
-/**
  * 4. RENDER STORY & BUY BUTTON
  */
 function loadStory() {
@@ -72,17 +7,26 @@ function loadStory() {
     const storyContent = document.getElementById('story-content');
     const authorElement = document.getElementById('author-name');
 
-    // Наполняем карточку данными
+    // Title and Text
     document.getElementById('story-title').innerText = story.title;
     
-    // Выводим автора, если он есть в файле данных
+    // Выводим автора
     if (authorElement) {
         authorElement.innerText = story.author || ""; 
     }
     
     storyContent.innerText = story.text;
-    
-    // Логика кнопки "Купить книгу"
+
+    // --- ЛОГИКА ЛАЙКОВ (СЛУЧАЙНОЕ ЧИСЛО) ---
+    const countElement = document.getElementById('like-count');
+    if (countElement) {
+        // Генерируем случайное число от 15 до 50 для каждой новой истории
+        const randomLikes = Math.floor(Math.random() * (50 - 15 + 1)) + 15;
+        countElement.innerText = randomLikes;
+    }
+    // ---------------------------------------
+
+    // BUY BOOK BUTTON
     const oldBtn = document.getElementById('buy-book-wrapper');
     if (oldBtn) oldBtn.remove();
 
@@ -95,11 +39,10 @@ function loadStory() {
                 </a>
             </div>
         `;
-        // Вставляем сразу после текста внутри карточки
         storyContent.insertAdjacentHTML('afterend', btnHTML);
     }
 
-    // Блок партнера внизу
+    // PARTNER BLOCK
     const adBox = document.getElementById('ad-container');
     if (adBox) {
         adBox.innerHTML = `
@@ -116,50 +59,4 @@ function loadStory() {
     resetInteractions();
     state.currentIndex = (state.currentIndex + 1) % state.stories.length;
     window.scrollTo(0,0);
-}
-
-function resetInteractions() {
-    state.audio.pause();
-    state.isPlaying = false;
-    const playIcon = document.querySelector('#audio-control i');
-    if (playIcon) playIcon.className = 'fa-solid fa-play';
-
-    const likeBtn = document.querySelector('.v-like-btn');
-    if (likeBtn) {
-        const icon = likeBtn.querySelector('i');
-        likeBtn.classList.remove('active');
-        if (icon) icon.style.color = 'inherit';
-    }
-}
-
-/**
- * 5. CONTROLS
- */
-function toggleLike(btn) {
-    const icon = btn.querySelector('i');
-    btn.classList.toggle('active');
-    if (icon) {
-        icon.style.color = btn.classList.contains('active') ? '#e91e63' : 'inherit';
-    }
-}
-
-function toggleAudio() {
-    // Берем историю, которая отображается сейчас
-    const story = state.stories[(state.currentIndex - 1 + state.stories.length) % state.stories.length];
-    const playIcon = document.querySelector('#audio-control i');
-
-    if (story && story.audio) {
-        if (!state.audio.src.includes(story.audio)) {
-            state.audio.src = story.audio;
-        }
-
-        if (state.isPlaying) {
-            state.audio.pause();
-            if (playIcon) playIcon.className = 'fa-solid fa-play';
-        } else {
-            state.audio.play();
-            if (playIcon) playIcon.className = 'fa-solid fa-pause';
-        }
-        state.isPlaying = !state.isPlaying;
-    }
 }
