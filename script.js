@@ -5,28 +5,20 @@ function loadStory() {
     const story = state.stories[state.currentIndex];
     const actor = actors[cafeSlug] || actors['default'];
     const storyContent = document.getElementById('story-content');
-    const authorElement = document.getElementById('author-name');
 
     // Title and Text
     document.getElementById('story-title').innerText = story.title;
-    
-    // Выводим автора
-    if (authorElement) {
-        authorElement.innerText = story.author || ""; 
-    }
-    
     storyContent.innerText = story.text;
-
-    // --- ЛОГИКА ЛАЙКОВ (СЛУЧАЙНОЕ ЧИСЛО) ---
+    
+    // --- ТОЛЬКО ЭТО ДОБАВЛЕНО: ЛОГИКА СЧЕТЧИКА ЛАЙКОВ ---
     const countElement = document.getElementById('like-count');
     if (countElement) {
-        // Генерируем случайное число от 15 до 50 для каждой новой истории
         const randomLikes = Math.floor(Math.random() * (50 - 15 + 1)) + 15;
         countElement.innerText = randomLikes;
     }
-    // ---------------------------------------
+    // ----------------------------------------------------
 
-    // BUY BOOK BUTTON
+    // BUY BOOK BUTTON (if link exists)
     const oldBtn = document.getElementById('buy-book-wrapper');
     if (oldBtn) oldBtn.remove();
 
@@ -42,7 +34,7 @@ function loadStory() {
         storyContent.insertAdjacentHTML('afterend', btnHTML);
     }
 
-    // PARTNER BLOCK
+    // PARTNER BLOCK (desc)
     const adBox = document.getElementById('ad-container');
     if (adBox) {
         adBox.innerHTML = `
