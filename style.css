@@ -358,6 +358,28 @@ body {
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
+.v-insta-top-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: rgba(0, 0, 0, 0.05); /* Легкий серый фон круга */
+    color: #333 !important;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.v-insta-top-link:active {
+    background: #e1306c; /* Цвет инсты при нажатии */
+    color: #fff !important;
+    transform: scale(0.9);
+}
+
+/* Если хочешь, чтобы она была совсем в углу, 
+убедись что у v-limit-container есть padding */
 .v-buy-btn:active {
     transform: scale(0.95);
 }
