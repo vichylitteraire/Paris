@@ -76,16 +76,16 @@ function loadStory() {
     storyContent.innerText = story.text;
     
     // BUY BOOK BUTTON (if link exists)
+ // КНОПКА "КУПИТЬ КНИГУ"
     const existingBuyBtn = document.getElementById('buy-book-wrapper');
     if (existingBuyBtn) existingBuyBtn.remove();
 
     if (story.buyLink && story.buyLink !== "#" && story.buyLink !== "") {
         const btnHTML = `
-            <div id="buy-book-wrapper" style="text-align:center; margin-top:30px; margin-bottom:10px;">
-                <a href="${story.buyLink}" target="_blank" class="v-buy-btn" 
-                   style="display:inline-flex; align-items:center; gap:8px; background:#222; color:#fff !important; padding:12px 25px; border-radius:30px; text-decoration:none; font-size:0.8rem; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+            <div id="buy-book-wrapper" class="v-buy-wrapper">
+                <a href="${story.buyLink}" target="_blank" class="v-buy-btn">
                    <i class="fa-solid fa-cart-shopping"></i> 
-                   ${state.lang === 'fr' ? 'ACHETER LE LIVRE' : 'BUY THE BOOK'}
+                   ${state.lang === 'fr' ? 'Acheter le livre' : 'Buy the book'}
                 </a>
             </div>
         `;
