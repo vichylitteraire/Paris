@@ -17,7 +17,7 @@ const cafeSlug = urlParams.get('cafe') || 'default';
  * ACTORS CONFIGURATION
  */
 const actors = {
-    'paul': { name: "Paul", stamp: "IMG.jpg", logo: "IMG.jpg" }, desc: "blablabla",
+    'paul': { name: "Paul", stamp: "IMG.JPG", logo: "IMG.JPG" }, desc: "blablabla",
     'colada': { name: "Colada", stamp: "colada_stamp.jpg", logo: "logopub.jpg" },
     'edouard': { name: "Edouard", stamp: "edouard_stamp.jpg", logo: "logopub.jpg" },
     'default': { name: "L'Heure de Soi", stamp: "default_stamp.jpg", logo: "logopub.jpg", desc: "blabla" }
