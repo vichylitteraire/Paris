@@ -6,14 +6,12 @@ const cafeSlug = urlParams.get('cafe') || 'default';
 
 const actors = {
     'paul': { 
-        name: "Paul", 
-        stamp: "IMG_2970.jpg", 
+        name: "Paul",  
         logo: "IMG_2970.jpg",
         desc: "Une pause gourmande avec nos viennoiseries artisanales." 
     },
     'default': { 
-        name: "L'Heure de Soi", 
-        stamp: "logopub.jpg", 
+        name: "L'Heure de Soi",  
         logo: "logopub.jpg",
         desc: "Votre rendez-vous littéraire quotidien au cœur de Paris."
     }
