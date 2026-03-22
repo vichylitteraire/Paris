@@ -7,7 +7,7 @@ const STORIES_DATA_FR = {
             text: "Le soleil se levait à peine sur les toits de Paris. Dans cette petite ruelle du Marais, l'odeur du café frais guidait les pas des rêveurs...",
             audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Замени на свою ссылку
             hasMore: true,
-                buyLink: "#"
+                buyLink: "https://shop.com"
         },
         {
             id: 2,
