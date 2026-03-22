@@ -89,12 +89,15 @@ function openModal() {
     const status = document.getElementById('modal-status');
     const actor = actors[cafeSlug] || actors['default'];
     
-    const testCount = 0; // ПРИНУДИТЕЛЬНО 10 ДЛЯ ТЕСТА
+    // 1. ЧИТАЕМ РЕАЛЬНЫЕ ДАННЫЕ ИЗ ПАМЯТИ
+    const db = JSON.parse(localStorage.getItem('user_stamps_db')) || {};
+    const currentCount = db[cafeSlug] ? db[cafeSlug].count : 0; 
 
+    // 2. РИСУЕМ СЕТКУ (КАК И РАНЬШЕ)
     grid.innerHTML = '';
     for (let i = 1; i <= 10; i++) {
         const slot = document.createElement('div');
-        const isActive = i <= testCount;
+        const isActive = i <= currentCount;
         slot.className = `v-slot ${isActive ? 'active' : ''}`;
         
         if (isActive) {
@@ -108,22 +111,28 @@ function openModal() {
         grid.appendChild(slot);
     }
 
-    // Текст для бариста
-// Внутри функции openModal, там где поздравление:
-    status.innerHTML = `
-        <div style="background:#fff5f7; padding:15px; border-radius:12px; border:1px solid #ffd1dc; margin-top:15px; text-align:center;">
-            <p style="color:#e91e63; font-weight:bold; margin:0; text-transform:uppercase; letter-spacing:1px;">
-                ${state.lang === 'fr' ? 'Félicitations !' : 'Congratulations!'}
+    // 3. ЛОГИКА НИЖНЕЙ ПАНЕЛИ (ПОЗДРАВЛЕНИЕ ИЛИ СЧЕТЧИК)
+    if (currentCount >= 10) {
+        // Если 10 марок — показываем кнопку RECONMMENCER
+        status.innerHTML = `
+            <div style="background:#fff5f7; padding:15px; border-radius:12px; border:1px solid #ffd1dc; margin-top:15px; text-align:center;">
+                <p style="color:#e91e63; font-weight:bold; margin:0; text-transform:uppercase;">Félicitations !</p>
+                <p style="font-size:0.85rem; color:#444; margin:5px 0 15px;">Présentez cet écran au barista.</p>
+                <button onclick="resetProgress()" style="background:#e91e63; color:white; border:none; padding:8px 18px; border-radius:20px; font-size:0.8rem; cursor:pointer; font-weight:600; box-shadow: 0 2px 5px rgba(233, 30, 99, 0.3);">
+                    RECOMMENCER 🔄
+                </button>
+            </div>
+        `;
+    } else {
+        // Если меньше 10 — пишем, сколько осталось
+        const remaining = 10 - currentCount;
+        status.innerHTML = `
+            <p style="text-align:center; color:#888; font-size:0.9rem; margin-top:15px; font-style:italic;">
+                ${state.lang === 'fr' ? `Encore ${remaining} étampes !` : `${remaining} more stamps!`}
             </p>
-            <p style="font-size:0.85rem; color:#444; margin:5px 0 15px;">
-                ${state.lang === 'fr' ? 'Présentez cet écran au barista.' : 'Show this screen to the barista.'}
-            </p>
-            
-            <button onclick="resetProgress()" style="background:#e91e63; color:white; border:none; padding:8px 15px; border-radius:20px; font-size:0.8rem; cursor:pointer; font-weight:600;">
-                ${state.lang === 'fr' ? 'RECOMMENCER' : 'RESTART'} 🔄
-            </button>
-        </div>
-    `;
+        `;
+    }
+
     document.getElementById('stamps-modal').style.display = 'flex';
 }
 
