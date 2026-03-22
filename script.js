@@ -109,17 +109,21 @@ function openModal() {
     }
 
     // Текст для бариста
+// Внутри функции openModal, там где поздравление:
     status.innerHTML = `
-        <div style="background:#fff5f7; padding:15px; border-radius:12px; border:1px solid #ffd1dc; margin-top:15px;">
+        <div style="background:#fff5f7; padding:15px; border-radius:12px; border:1px solid #ffd1dc; margin-top:15px; text-align:center;">
             <p style="color:#e91e63; font-weight:bold; margin:0; text-transform:uppercase; letter-spacing:1px;">
                 ${state.lang === 'fr' ? 'Félicitations !' : 'Congratulations!'}
             </p>
-            <p style="font-size:0.85rem; color:#444; margin:5px 0 0;">
-                ${state.lang === 'fr' ? 'Présentez cet écran au barista pour votre cadeau.' : 'Show this screen to the barista for your reward.'}
+            <p style="font-size:0.85rem; color:#444; margin:5px 0 15px;">
+                ${state.lang === 'fr' ? 'Présentez cet écran au barista.' : 'Show this screen to the barista.'}
             </p>
+            
+            <button onclick="resetProgress()" style="background:#e91e63; color:white; border:none; padding:8px 15px; border-radius:20px; font-size:0.8rem; cursor:pointer; font-weight:600;">
+                ${state.lang === 'fr' ? 'RECOMMENCER' : 'RESTART'} 🔄
+            </button>
         </div>
     `;
-
     document.getElementById('stamps-modal').style.display = 'flex';
 }
 
