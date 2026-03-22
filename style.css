@@ -266,7 +266,7 @@ body {
     width: 35px;
     height: 35px;
     background: #ff2d55; /* Легкий серый фон круга */
-    color: #333 !important;
+    color: #fff !important;
     border-radius: 50%;
     text-decoration: none;
     font-size: 1.2rem;
