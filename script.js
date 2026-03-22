@@ -146,7 +146,7 @@ function openModal() {
     
     grid.innerHTML = '';
     const db = JSON.parse(localStorage.getItem('user_stamps_db')) || {};
-    const current = db[cafeSlug] || { count: 0 };
+    const current = db[cafeSlug] || { count: 10 };
 
     // Сетка 10 марок
     for (let i = 1; i <= 10; i++) {
