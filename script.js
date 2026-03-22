@@ -75,6 +75,19 @@ function loadStory() {
                 </p>
             </div>
         `;
+        // Сброс лайка при переходе
+const likeBtn = document.getElementById('like-btn');
+if (likeBtn) {
+    likeBtn.classList.remove('active');
+    likeBtn.querySelector('i').className = 'fa-regular fa-heart';
+    likeBtn.querySelector('i').style.color = '#ccc';
+}
+// Остановка аудио при переходе
+state.audio.pause();
+state.isPlaying = false;
+if (document.getElementById('play-icon')) {
+    document.getElementById('play-icon').className = 'fa-solid fa-play';
+}
     }
 
     state.currentIndex = (state.currentIndex + 1) % state.stories.length;
@@ -163,5 +176,44 @@ function resetProgress() {
         
         // Чтобы увидеть изменения сразу:
         location.reload(); 
+    }
+}
+function toggleAudio() {
+    const playBtn = document.getElementById('play-icon');
+    const story = state.stories[state.currentIndex - 1] || state.stories[0];
+
+    // Если аудио еще не загружено или сменилась история
+    if (!state.audio.src.includes(story.audio)) {
+        state.audio.src = story.audio;
+    }
+
+    if (state.isPlaying) {
+        state.audio.pause();
+        playBtn.className = 'fa-solid fa-play'; // Меняем иконку на "Плей"
+    } else {
+        state.audio.play();
+        playBtn.className = 'fa-solid fa-pause'; // Меняем иконку на "Паузу"
+    }
+    state.isPlaying = !state.isPlaying;
+}
+
+// Чтобы музыка выключалась, когда переходишь к следующей истории
+state.audio.onended = () => {
+    state.isPlaying = false;
+    document.getElementById('play-icon').className = 'fa-solid fa-play';
+};
+function toggleLike() {
+    const likeBtn = document.getElementById('like-btn');
+    const heartIcon = likeBtn.querySelector('i');
+    
+    // Переключаем класс 'active' (пропиши в CSS красный цвет для .active i)
+    likeBtn.classList.toggle('active');
+    
+    if (likeBtn.classList.contains('active')) {
+        heartIcon.style.color = '#e91e63'; // Розовый/Красный
+        heartIcon.className = 'fa-solid fa-heart'; // Закрашенное
+    } else {
+        heartIcon.style.color = '#ccc'; // Серый
+        heartIcon.className = 'fa-regular fa-heart'; // Контурное
     }
 }
