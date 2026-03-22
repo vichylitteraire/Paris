@@ -1,5 +1,5 @@
 /**
- * 1. ИНИЦИАЛИЗАЦИЯ И КОНСТАНТЫ
+ * 1. CONFIGURATION & STATE
  */
 const urlParams = new URLSearchParams(window.location.search);
 const cafeSlug = urlParams.get('cafe') || 'default';
@@ -15,7 +15,7 @@ const actors = {
         name: "L'Heure de Soi", 
         stamp: "logopub.jpg", 
         logo: "logopub.jpg",
-        desc: "Ваш литературный момент в сердце Парижа."
+        desc: "Votre rendez-vous littéraire quotidien au cœur de Paris."
     }
 };
 
@@ -23,35 +23,33 @@ const state = {
     lang: 'fr',
     currentIndex: 0,
     stories: [],
-    audio: new Audio(), 
+    audio: new Audio(),
     isPlaying: false
 };
 
 /**
- * 2. СТАРТ ПРИЛОЖЕНИЯ
+ * 2. APP START
  */
 function setLanguage(lang) {
     state.lang = lang;
     
-    // Проверка наличия внешних данных
     if (typeof STORIES_DATA_FR === 'undefined') {
-        alert("Данные не загружены! Проверьте файлы stories_fr.js и stories_en.js");
+        alert("Error: Data files not found!");
         return;
     }
 
     state.stories = (lang === 'fr') ? [...STORIES_DATA_FR.stories] : [...STORIES_DATA_EN.stories];
-    state.stories.sort(() => Math.random() - 0.5); // Перемешиваем
+    state.stories.sort(() => Math.random() - 0.5);
 
     document.getElementById('language-screen').style.display = 'none';
     document.getElementById('main-content').style.display = 'block';
 
-    // Начисляем марку за визит (1 раз в день)
-    handleDailyStamp();
+    handleDailyStamp(); // Add 1 stamp per day
     loadStory();
 }
 
 /**
- * 3. ЛОГИКА СЧЕТЧИКА (БЕЗ ТЕСТОВЫХ 10)
+ * 3. STAMP LOGIC (REAL MEMORY)
  */
 function handleDailyStamp() {
     let db = JSON.parse(localStorage.getItem('user_stamps_db')) || {};
@@ -66,48 +64,51 @@ function handleDailyStamp() {
 }
 
 /**
- * 4. ЗАГРУЗКА ИСТОРИИ И КНОПКИ КУПИТЬ
+ * 4. RENDER STORY & BUY BUTTON
  */
 function loadStory() {
     const story = state.stories[state.currentIndex];
     const actor = actors[cafeSlug] || actors['default'];
-
-    // Текст и заголовок
-    document.getElementById('story-title').innerText = story.title;
-    document.getElementById('story-content').innerText = story.text;
-    
-    // КНОПКА "КУПИТЬ КНИГУ" (если есть ссылка в данных)
     const storyContent = document.getElementById('story-content');
-    const existingBuyBtn = document.getElementById('buy-book-wrapper');
-    if (existingBuyBtn) existingBuyBtn.remove(); // Удаляем старую при переключении
 
-    if (story.buyLink && story.buyLink !== "#") {
+    // Title and Text
+    document.getElementById('story-title').innerText = story.title;
+    storyContent.innerText = story.text;
+    
+    // BUY BOOK BUTTON (if link exists)
+    const existingBuyBtn = document.getElementById('buy-book-wrapper');
+    if (existingBuyBtn) existingBuyBtn.remove();
+
+    if (story.buyLink && story.buyLink !== "#" && story.buyLink !== "") {
         const btnHTML = `
-            <div id="buy-book-wrapper" style="text-align:center; margin-top:20px;">
+            <div id="buy-book-wrapper" style="text-align:center; margin-top:30px; margin-bottom:10px;">
                 <a href="${story.buyLink}" target="_blank" class="v-buy-btn" 
-                   style="display:inline-block; background:#333; color:#fff; padding:10px 20px; border-radius:20px; text-decoration:none; font-size:0.8rem; font-weight:600;">
-                   <i class="fa-solid fa-cart-shopping"></i> ${state.lang === 'fr' ? 'ACHETER LE LIVRE' : 'BUY THE BOOK'}
+                   style="display:inline-flex; align-items:center; gap:8px; background:#222; color:#fff !important; padding:12px 25px; border-radius:30px; text-decoration:none; font-size:0.8rem; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                   <i class="fa-solid fa-cart-shopping"></i> 
+                   ${state.lang === 'fr' ? 'ACHETER LE LIVRE' : 'BUY THE BOOK'}
                 </a>
             </div>
         `;
-        storyContent.insertAdjacentHTML('afterend', btnHTML);
+        storyContent.innerHTML += btnHTML; 
     }
 
-    // БЛОК ПАРТНЕРА (desc)
+    // PARTNER BLOCK (desc)
     const adBox = document.getElementById('ad-container');
     if (adBox) {
         adBox.innerHTML = `
             <div style="text-align:center; padding:20px; border-top:1px solid #eee; margin-top:30px;">
-                <img src="${actor.logo}" style="width:60px; height:60px; border-radius:50%; object-fit:cover;">
-                <h4 style="margin:10px 0 5px;">${actor.name}</h4>
-                <p style="font-size:0.85rem; color:#666; font-style:italic;">${actor.desc}</p>
+                <img src="${actor.logo}" style="width:64px; height:64px; border-radius:50%; object-fit:cover;">
+                <h4 style="margin:10px 0 5px; font-family:serif;">${actor.name}</h4>
+                <p style="font-size:0.85rem; color:#666; font-style:italic; line-height:1.5; max-width:280px; margin:0 auto;">
+                    ${actor.desc}
+                </p>
             </div>
         `;
     }
 
-    // Сброс аудио и лайка
     resetInteractions();
     state.currentIndex = (state.currentIndex + 1) % state.stories.length;
+    window.scrollTo(0,0);
 }
 
 function resetInteractions() {
@@ -118,14 +119,23 @@ function resetInteractions() {
 
     const likeBtn = document.querySelector('.v-like-btn');
     if (likeBtn) {
+        const icon = likeBtn.querySelector('i');
         likeBtn.classList.remove('active');
-        likeBtn.querySelector('i').style.color = 'inherit';
+        if (icon) icon.style.color = 'inherit';
     }
 }
 
 /**
- * 5. ПЛЕЕР И ЛАЙК
+ * 5. CONTROLS (LIKE / AUDIO)
  */
+function toggleLike(btn) {
+    const icon = btn.querySelector('i');
+    btn.classList.toggle('active');
+    if (icon) {
+        icon.style.color = btn.classList.contains('active') ? '#e91e63' : 'inherit';
+    }
+}
+
 function toggleAudio() {
     const story = state.stories[state.currentIndex - 1] || state.stories[0];
     const playIcon = document.querySelector('#audio-control i');
@@ -137,23 +147,17 @@ function toggleAudio() {
 
         if (state.isPlaying) {
             state.audio.pause();
-            playIcon.className = 'fa-solid fa-play';
+            if (playIcon) playIcon.className = 'fa-solid fa-play';
         } else {
             state.audio.play();
-            playIcon.className = 'fa-solid fa-pause';
+            if (playIcon) playIcon.className = 'fa-solid fa-pause';
         }
         state.isPlaying = !state.isPlaying;
     }
 }
 
-function toggleLike(btn) {
-    const icon = btn.querySelector('i');
-    btn.classList.toggle('active');
-    icon.style.color = btn.classList.contains('active') ? '#e91e63' : 'inherit';
-}
-
 /**
- * 6. МОДАЛКА И СБРОС (ПРОГРЕСС 0-10)
+ * 6. MODAL & MULTILINGUAL CONGRATS
  */
 function openModal() {
     const grid = document.getElementById('stamps-grid');
@@ -172,6 +176,7 @@ function openModal() {
         if (isActive) {
             slot.style.backgroundImage = `url('${actor.stamp}')`;
             slot.style.backgroundSize = "cover";
+            slot.style.backgroundPosition = "center";
             slot.innerText = '';
         } else {
             slot.innerText = i;
@@ -180,16 +185,26 @@ function openModal() {
     }
 
     if (currentCount >= 10) {
+        // Multilingual Congrats UI
+        const title = state.lang === 'fr' ? 'FÉLICITATIONS ! 🎁' : 'CONGRATULATIONS! 🎁';
+        const sub = state.lang === 'fr' ? 'Présentez cet écran au barista.' : 'Show this screen to the barista.';
+        const btn = state.lang === 'fr' ? 'RECOMMENCER 🔄' : 'RESTART 🔄';
+
         status.innerHTML = `
-            <div style="text-align:center; padding:10px;">
-                <p style="color:#e91e63; font-weight:bold; margin-bottom:10px;">FÉLICITATIONS ! 🎁</p>
-                <button onclick="resetProgress()" style="background:#333; color:#fff; border:none; padding:8px 15px; border-radius:20px; font-size:0.75rem; cursor:pointer;">
-                    RECOMMENCER 🔄
+            <div style="text-align:center; padding:15px; background:#fff5f7; border-radius:12px; border:1px solid #ffd1dc; margin-top:15px;">
+                <p style="color:#e91e63; font-weight:bold; margin:0; text-transform:uppercase;">${title}</p>
+                <p style="font-size:0.85rem; color:#444; margin:5px 0 15px;">${sub}</p>
+                <button onclick="resetProgress()" style="background:#222; color:#fff; border:none; padding:10px 20px; border-radius:20px; cursor:pointer; font-weight:bold; font-size:0.75rem;">
+                    ${btn}
                 </button>
             </div>
         `;
     } else {
-        status.innerHTML = `<p style="text-align:center; color:#888; font-size:0.85rem;">Encore ${10 - currentCount} étampes !</p>`;
+        // Multilingual Counter
+        const remaining = 10 - currentCount;
+        status.innerHTML = `<p style="text-align:center; color:#888; font-size:0.85rem; font-style:italic; margin-top:15px;">
+            ${state.lang === 'fr' ? `Encore ${remaining} étampes !` : `${remaining} more stamps!`}
+        </p>`;
     }
 
     document.getElementById('stamps-modal').style.display = 'flex';
@@ -200,7 +215,8 @@ function closeModal() {
 }
 
 function resetProgress() {
-    if (confirm(state.lang === 'fr' ? "Recommencer la collection ?" : "Restart collection?")) {
+    const confirmText = state.lang === 'fr' ? "Recommencer la collection ?" : "Restart the collection?";
+    if (confirm(confirmText)) {
         let db = JSON.parse(localStorage.getItem('user_stamps_db')) || {};
         if (db[cafeSlug]) {
             db[cafeSlug].count = 0;
