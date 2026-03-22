@@ -7,8 +7,8 @@ const cafeSlug = urlParams.get('cafe') || 'default';
 const actors = {
     'paul': { 
         name: "Paul", 
-        stamp: "IMG_2970.jpg", 
-        logo: "IMG_2970.jpg",
+        stamp: "IMG.JPG", 
+        logo: "IMG.JPG",
         desc: "Une pause gourmande avec nos viennoiseries artisanales." 
     },
     'colada': { 
