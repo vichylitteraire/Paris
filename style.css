@@ -330,3 +330,35 @@ body {
     70% { transform: scale(1.05); }
     100% { transform: scale(1); opacity: 1; }
 }
+
+/* Элегантная кнопка покупки */
+.v-buy-wrapper {
+    text-align: center;
+    margin: 25px 0 10px;
+}
+
+.v-buy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #222; /* Можно заменить на #e91e63, если хочешь розовый */
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.v-buy-btn:active {
+    transform: scale(0.96);
+    background-color: #000;
+}
+
+.v-buy-btn i {
+    font-size: 0.8rem;
+}
