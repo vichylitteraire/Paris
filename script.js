@@ -89,7 +89,7 @@ function openModal() {
     const status = document.getElementById('modal-status');
     const actor = actors[cafeSlug] || actors['default'];
     
-    const testCount = 10; // ПРИНУДИТЕЛЬНО 10 ДЛЯ ТЕСТА
+    const testCount = 0; // ПРИНУДИТЕЛЬНО 10 ДЛЯ ТЕСТА
 
     grid.innerHTML = '';
     for (let i = 1; i <= 10; i++) {
