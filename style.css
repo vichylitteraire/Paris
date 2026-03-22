@@ -265,18 +265,12 @@ body {
     justify-content: center;
     width: 35px;
     height: 35px;
-    background: rgba(0, 0, 0, 0.05); /* Легкий серый фон круга */
+    background: #ff2d55; /* Легкий серый фон круга */
     color: #333 !important;
     border-radius: 50%;
     text-decoration: none;
     font-size: 1.2rem;
     transition: all 0.3s ease;
-}
-
-.v-insta-top-link:active {
-    background: #e1306c; /* Цвет инсты при нажатии */
-    color: #fff !important;
-    transform: scale(0.9);
 }
 
 /* Если хочешь, чтобы она была совсем в углу, 
