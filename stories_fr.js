@@ -5,7 +5,9 @@ const STORIES_DATA_FR = {
             title: "Le Café de l'Aube",
             author: "Marc Levy",
             text: "Le soleil se levait à peine sur les toits de Paris. Dans cette petite ruelle du Marais, l'odeur du café frais guidait les pas des rêveurs...",
-            audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" // Замени на свою ссылку
+            audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Замени на свою ссылку
+            hasMore: true,
+                buyLink: "#"
         },
         {
             id: 2,
