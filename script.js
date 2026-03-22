@@ -77,8 +77,10 @@ function loadStory() {
     
     // BUY BOOK BUTTON (if link exists)
  // КНОПКА "КУПИТЬ КНИГУ"
-    const existingBuyBtn = document.getElementById('buy-book-wrapper');
-    if (existingBuyBtn) existingBuyBtn.remove();
+    // КНОПКА "КУПИТЬ КНИГУ"
+    // Сначала ищем и удаляем старую кнопку (везде)
+    const oldBtn = document.getElementById('buy-book-wrapper');
+    if (oldBtn) oldBtn.remove();
 
     if (story.buyLink && story.buyLink !== "#" && story.buyLink !== "") {
         const btnHTML = `
@@ -89,7 +91,8 @@ function loadStory() {
                 </a>
             </div>
         `;
-        storyContent.innerHTML += btnHTML; 
+        // Вставляем ПОСЛЕ блока с текстом (так она не будет зависеть от стилей текста)
+        storyContent.insertAdjacentHTML('afterend', btnHTML);
     }
 
     // PARTNER BLOCK (desc)
