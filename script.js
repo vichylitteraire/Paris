@@ -44,12 +44,12 @@ function setLanguage(lang) {
     document.getElementById('language-screen').style.display = 'none';
     document.getElementById('main-content').style.display = 'block';
 
-    handleDailyStamp(); // Add 1 stamp per day
+    handleDailyStamp(); 
     loadStory();
 }
 
 /**
- * 3. STAMP LOGIC (REAL MEMORY)
+ * 3. STAMP LOGIC
  */
 function handleDailyStamp() {
     let db = JSON.parse(localStorage.getItem('user_stamps_db')) || {};
@@ -70,15 +70,19 @@ function loadStory() {
     const story = state.stories[state.currentIndex];
     const actor = actors[cafeSlug] || actors['default'];
     const storyContent = document.getElementById('story-content');
+    const authorElement = document.getElementById('author-name');
 
-    // Title and Text
+    // Наполняем карточку данными
     document.getElementById('story-title').innerText = story.title;
+    
+    // Выводим автора, если он есть в файле данных
+    if (authorElement) {
+        authorElement.innerText = story.author || ""; 
+    }
+    
     storyContent.innerText = story.text;
     
-    // BUY BOOK BUTTON (if link exists)
- // КНОПКА "КУПИТЬ КНИГУ"
-    // КНОПКА "КУПИТЬ КНИГУ"
-    // Сначала ищем и удаляем старую кнопку (везде)
+    // Логика кнопки "Купить книгу"
     const oldBtn = document.getElementById('buy-book-wrapper');
     if (oldBtn) oldBtn.remove();
 
@@ -91,11 +95,11 @@ function loadStory() {
                 </a>
             </div>
         `;
-        // Вставляем ПОСЛЕ блока с текстом (так она не будет зависеть от стилей текста)
+        // Вставляем сразу после текста внутри карточки
         storyContent.insertAdjacentHTML('afterend', btnHTML);
     }
 
-    // PARTNER BLOCK (desc)
+    // Блок партнера внизу
     const adBox = document.getElementById('ad-container');
     if (adBox) {
         adBox.innerHTML = `
@@ -129,7 +133,7 @@ function resetInteractions() {
 }
 
 /**
- * 5. CONTROLS (LIKE / AUDIO)
+ * 5. CONTROLS
  */
 function toggleLike(btn) {
     const icon = btn.querySelector('i');
@@ -140,7 +144,8 @@ function toggleLike(btn) {
 }
 
 function toggleAudio() {
-    const story = state.stories[state.currentIndex - 1] || state.stories[0];
+    // Берем историю, которая отображается сейчас
+    const story = state.stories[(state.currentIndex - 1 + state.stories.length) % state.stories.length];
     const playIcon = document.querySelector('#audio-control i');
 
     if (story && story.audio) {
