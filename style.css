@@ -345,7 +345,7 @@ body {
     align-items: center;
     gap: 8px;
     background-color: #222;
-    color: #fff !important;
+    color: #ff2d55 !important;
     padding: 8px 16px;       /* Уменьшенные отступы */
     border-radius: 20px;
     text-decoration: none;
