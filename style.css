@@ -344,8 +344,8 @@ body {
     display: inline-flex !important; /* Не дает растягиваться */
     align-items: center;
     gap: 8px;
-    background-color: #222;
-    color: #ff2d55 !important;
+    background-color: #ff2d55;
+    color: #fff !important;
     padding: 8px 16px;       /* Уменьшенные отступы */
     border-radius: 20px;
     text-decoration: none;
