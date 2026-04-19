@@ -3,16 +3,12 @@
  * Все функции в одном файле.
  */
 // --- ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ ---
-const supabaseUrl = 'https://supabase.com/dashboard/project/gbpntxkkxabndhtpdaai/editor/52297?schema=public'; // Например: https://xyz123.supabase.co
-const supabaseKey = 'sb_publishable_AcsuGHJH7zZd1EEcCPmN4w_m65x6omh'; // Очень длинная строка букв и цифр
-
-let supabase;
-
-try {
-    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-    console.log("Supabase подключен успешно");
-} catch (e) {
-    console.error("Ошибка подключения Supabase. Проверьте CDN в HTML!", e);
+// Проверяем, не объявлена ли переменная ранее, чтобы избежать ошибки
+if (typeof supabase === 'undefined') {
+    const supabaseUrl = 'https://gbpntxkkxabndhtpdaai.supabase.co';
+    const supabaseKey = 'sb_publishable_AcsuGHJH7zZd1EEcCPmN4w_m65x6omh';
+    // Используем window.supabase, чтобы точно обратиться к библиотеке из CDN
+    var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 }
 
 
