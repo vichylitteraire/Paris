@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Paris littéraire</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="language-screen" class="v-screen-full">
+        <div class="v-welcome-container">
+            <img src="IMG_3178.PNG" alt="Logo" style="width: 100%; max-width: 400px;">
+            <div class="v-lang-grid">
+                <button class="v-btn-lang" onclick="setLanguage('fr')">FRANÇAIS</button>
+                <button class="v-btn-lang" onclick="setLanguage('en')">ENGLISH</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <header class="v-top-bar">
+            <div class="v-limit-container">
+                Nous contacter ➔
+                <a href="mailto:vichilitteraire@gmail.com" class="v-insta-top-link">
+    <i class="fa-regular fa-envelope"></i>
+</a>
+                <a href="https://www.instagram.com/vichylitteraire/" target="_blank" class="v-insta-top-link">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+        </header>
+
+        <main class="v-story-wrapper">
+            <article class="v-story-card">
+                <h2 id="story-title" class="v-story-h"></h2>
+                <p id="author-name" class="v-author-p"></p>
+                <div class="v-decorative-line"></div>
+                <div id="story-content" class="v-story-body"></div>
+
+<div class="v-buy-container">
+    <a id="buy-link" href="#" target="_blank" class="v-buy-btn">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>ACHETER LE LIVRE</span>
+    </a>
+</div>
+
+            </article>
+
+       <section id="ad-container" class="v-partner-section">
+    <div class="v-ad-card lang-fr">
+        <span class="v-ad-label">PARTENAIRE</span>
+        <div class="v-ad-text">
+            <img class="picpub" src="IMG_3178.PNG" width="300px" alt="">
+            <h4 class="textpub">Paris Littéraire</h4>
+            <p class="textpub">Votre LOGO ici</p>
+        </div>
+        <a href="https://www.instagram.com/vichylitteraire/" target="_blank" class="v-ad-btn">VOIR PLUS</a>
+    </div>
+
+    <div class="v-ad-card lang-en" style="display: none;">
+        <span class="v-ad-label">PARTNER</span>
+        <div class="v-ad-text">
+             <img class="picpub" src="IMG_3178.PNG" alt="">
+            <h4 class="textpub">Paris Littéraire</h4>
+            <p class="textpub">Your LOGO here</p>
+        </div>
+        <a href="https://www.instagram.com/vichylitteraire/" target="_blank" class="v-ad-btn">SEE MORE</a>
+    </div>
+</section>
+        </main>
+
+        <footer class="v-bottom-nav">
+            <div class="v-nav-inner">
+                <button class="v-circle-btn v-like-btn" onclick="toggleLike(this)">
+                    <i class="fa-solid fa-heart"></i>
+                    <span id="like-count" class="v-like-count">0</span>
+                </button>
+
+                <button class="v-circle-btn v-audio-btn" onclick="toggleAudio()" id="audio-control">
+                    <i class="fa-solid fa-play"></i>
+                </button>
+                
+              <button class="v-action-stampes" onclick="openStamps()">
+                    <span class="v-next-label">MES ÉTAMPES</span>
+                </button>
+
+                <button class="v-action-next" onclick="loadStory()">
+                    <span class="v-next-label">AUTRE TEXTE</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+   <div id="stamps-modal" class="v-modal-overlay" style="display:none;">
+    <div class="v-modal-content">
+        <button class="v-close-modal" onclick="closeStamps()">&times;</button>
+        
+        <h3>Collection de Étampes</h3>
+
+        <div id="stamps-container">
+            <div class="v-stamps-grid">
+                <div id="cafe_vichy" class="v-stamp">
+                    <img width="50px" src="IMG_3178.PNG" class="v-stamp-img">
+                </div>
+                <div id="book_store_paris" class="v-stamp">
+                    <img width="50px" src="img/stamps/book.png" class="v-stamp-img">
+                </div>
+                <div id="museum_hugo" class="v-stamp">
+                    <img width="50px" src="img/stamps/museum.png" class="v-stamp-img">
+                </div>
+                <div id="stamp_4" class="v-stamp"><img width="50px" src="img/stamps/4.png" class="v-stamp-img"></div>
+                <div id="stamp_5" class="v-stamp"><img width="50px" src="img/stamps/5.png" class="v-stamp-img"></div>
+                <div id="stamp_6" class="v-stamp"><img width="50px" src="img/stamps/6.png" class="v-stamp-img"></div>
+                <div id="stamp_7" class="v-stamp"><img width="50px" src="img/stamps/7.png" class="v-stamp-img"></div>
+                <div id="stamp_8" class="v-stamp"><img width="50px" src="img/stamps/8.png" class="v-stamp-img"></div>
+                <div id="stamp_9" class="v-stamp"><img width="50px" src="img/stamps/9.png" class="v-stamp-img"></div>
+                <div id="shop_x" class="v-stamp"><img width="50px" src="img/stamps/x.png" class="v-stamp-img"></div>
+            </div>
+            
+            <p class="v-stamps-info">Collectez 10 étampes pour débloquer un bonus !</p>
+        </div>
+        </div>
+</div>
+
+    <script src="stories_fr.js"></script>
+    <script src="stories_en.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
