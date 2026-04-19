@@ -2,6 +2,11 @@
  * PARIS LITTÉRAIRE - FINAL MASTER SCRIPT 2026
  * Все функции в одном файле.
  */
+// --- ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ ---
+const supabaseUrl = 'https://supabase.com/dashboard/project/gbpntxkkxabndhtpdaai/editor/52297?schema=public'; // Например: https://xyz123.supabase.co
+const supabaseKey = 'sb_publishable_AcsuGHJH7zZd1EEcCPmN4w_m65x6omh'; // Очень длинная строка букв и цифр
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
 
 // --- 1. НАСТРОЙКИ ---
 const VALID_STAMPS = ['cafe1', 'cafe2', 'cafe3', 'cafe4', 'cafe5', 'cafe6', 'cafe7', 'cafe8', 'cafe9', 'cafe10'];
