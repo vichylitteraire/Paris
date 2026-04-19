@@ -190,3 +190,36 @@ function openStamps() {
 function closeStamps() {
     document.getElementById('stamps-modal').style.display = 'none';
 }
+
+// --- 8. ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ (LEGAL MODAL) ---
+
+function openLegal() {
+    const modal = document.getElementById('legal-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        // Блокируем прокрутку основного сайта, пока открыто окно
+        document.body.style.overflow = 'hidden'; 
+    }
+}
+
+function closeLegal() {
+    const modal = document.getElementById('legal-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        // Возвращаем прокрутку
+        document.body.style.overflow = 'auto'; 
+    }
+}
+
+// Закрытие окна при клике вне его контента (по темному фону)
+window.onclick = function(event) {
+    const legalModal = document.getElementById('legal-modal');
+    const stampsModal = document.getElementById('stamps-modal');
+    
+    if (event.target == legalModal) {
+        closeLegal();
+    }
+    if (event.target == stampsModal) {
+        closeStamps();
+    }
+}
