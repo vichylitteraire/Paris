@@ -5,7 +5,15 @@
 // --- ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ ---
 const supabaseUrl = 'https://supabase.com/dashboard/project/gbpntxkkxabndhtpdaai/editor/52297?schema=public'; // Например: https://xyz123.supabase.co
 const supabaseKey = 'sb_publishable_AcsuGHJH7zZd1EEcCPmN4w_m65x6omh'; // Очень длинная строка букв и цифр
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+let supabase;
+
+try {
+    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    console.log("Supabase подключен успешно");
+} catch (e) {
+    console.error("Ошибка подключения Supabase. Проверьте CDN в HTML!", e);
+}
 
 
 // --- 1. НАСТРОЙКИ ---
