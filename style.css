@@ -387,3 +387,55 @@ body {
     white-space: pre-line; /* Это магическое свойство сохранит твои переносы! */
 }
 
+/* COPYRIGHT ВНИЗУ */
+.copyright-notice {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.legal-link {
+    color: #888;
+    text-decoration: underline;
+}
+
+/* МОДАЛЬНОЕ ОКНО (Mentions Légales) */
+.modal-overlay {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    border-radius: 8px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px; right: 15px;
+    background: none; border: none; font-size: 1.5rem; cursor: pointer;
+}
+
+.modal-title { margin-top: 0; }
+.modal-text h3 { font-size: 1rem; margin-top: 20px; border-bottom: 1px solid #eee; }
+.modal-text p { font-size: 0.9rem; }
+
+.modal-btn-close {
+    width: 100%;
+    margin-top: 25px;
+    padding: 10px;
+    background: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
